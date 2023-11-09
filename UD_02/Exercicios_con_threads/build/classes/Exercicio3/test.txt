@@ -1,0 +1,1 @@
+Este es un texto de prueba para comprobar que mi código cuenta el número de carácteres.
