@@ -1,0 +1,12 @@
+P:Non se preocupe de sincronizar os accesos á variable compartida. Obtén o resultado correcto?
+R: NON, en caso de hilos no sincronizados no siempre se obtendrá el resultado esperado, ello variará
+dependiendo de las características del ordenador que lo ejecute (Hardware).
+
+P: Lance os Threads primeiro mediante la clase Thread e
+despois mediante o o interface Runnable. Por último cree unha última versión do programa empregando
+AtomicInteger. Qué diferencias aprecia na execución do programa?
+
+R: Personalmente entre la clase Thread y empleado la interfaz Runnable no he encontrado diferencia alguna, ambas clases
+realizan una sincronización de la variable correspondiente. Sin embargo, si existe una diferenciación con repecto a
+AtomicInteger, y es que AtomicInteger no realiza una sincronización en los hilos como tal, sino que realiza una "operación
+atómica" sin necesidad de bloqueos.
