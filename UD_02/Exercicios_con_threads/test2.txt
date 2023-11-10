@@ -1,0 +1,2 @@
+Este documento forma parte del testeo de palabras y caracteres que se deben de sumar en el ejercicio 3 de la unidad 2. 
+Espero que funcione todo bien!

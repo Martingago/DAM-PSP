@@ -1,0 +1,3 @@
+Prueba de que el fichero lee el número de caracteres.
+También tiene que leer el número de líneas!
+Espero que funcione! :)
