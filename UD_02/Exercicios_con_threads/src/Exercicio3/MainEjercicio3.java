@@ -4,6 +4,7 @@ public class MainEjercicio3 {
 
     public static void main(String[] args) {
         long startTime = System.currentTimeMillis(); // Tiempo inicial
+        
         //Código para probar que el programa funciona sin tener que pasar parámetros:
        
         /**
