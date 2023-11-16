@@ -4,6 +4,9 @@ public class Carrera {
 
     private static int posicionTortuga = 0;
     private static int posicionLiebre = 0;
+    private static final int META = 70;
+    
+    private final Object lock = new Object();
 
     public Carrera() {
         ThreadAnimales tortuga = new ThreadAnimales(EnumTipoAnimal.TORTUGA, posicionTortuga);
@@ -15,5 +18,6 @@ public class Carrera {
         threadTortuga.start();
         threadLiebre.start();
     }
+    
     
 }

@@ -7,9 +7,6 @@ public class MainEjercicio4 {
         
         
         Carrera carrera = new Carrera();
- 
-        
-        
     }
     
 }
