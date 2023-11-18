@@ -16,7 +16,7 @@ public class MainEjercicio5 {
         TestMatrices i = new TestMatrices();
 
         calculo.calcularMuplicacionMatrices(i.matrizA, i.matrizB);
-        CalculoMatrizThread.calcularMuplicacionMatrices(i.matrizA, i.matrizB);
+        //CalculoMatrizThread.calcularMuplicacionMatrices(i.matrizA, i.matrizB);
     }
 
 }
