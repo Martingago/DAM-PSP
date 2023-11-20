@@ -1,0 +1,10 @@
+Lo que puedo observar y lo que me llama la atención de usar el código inicial del ejericico1 a emplear el código del 
+ejercicio6 que implementa el barrier, es que los threads en el ejercicio6 no terminan sino que se quedan en un estado
+"dormido"  en la línea 28: barrier.await().
+
+Esto hace que (en caso de existir) el resto del código no termine de ejecutarse hasta que todos los hilos alcancen el barrier.await()
+ -- cuando se ha declarado el barrier en el main, le hemos pasado el parámetro parties: NUM_THREADS el cual cuando se lleguen a ese 
+    determinado número de barrier.await(), el programa liberará los barriers haciendo que le código continue.
+
+El resultado del ejercicio6 es que ningún hilo continúa desde el barrier.await() de forma individual, sino que esperan a que TODOS
+los hilos alcancen éste punto. Una vez alcanzando cada hilo de forma individual continúa con su ejecución.
