@@ -1,0 +1,21 @@
+Para este ejercicio5 he estado realizando pruebas con las mismas matrices.
+Como EXTRA, he creado también un cálculo de matrices empleando threads, pero de ésta vez de manera Secuencial.
+Estos han sido los resultados de varias pruebas realizadas (todas ellas con las mismas matrices para evitar cambios):
+
+NUMERO DE PRUEBA:                   1º  - 2º  - 3º  - 4º  - 5º
+CÁLCULO MATRIZ SECUENCIAL:          2ms - 4ms - 2ms - 2ms - 1ms
+CÁLCULO MATRIZ THREAD PARALELO      0ms - 1ms - 1ms - 2ms - 3ms
+CÁLCULO MATRIZ THREAD SECUENCIAL    6ms - 7ms - 6ms - 7ms - 6ms
+
+Cómo se puede observar, menos en el caso número 5, en todos ellos se presenta el mismo patrón:
+    El método más rápido es el CALCULO MEDIANTE THREADS EN PARALELO, pues la carga de trabajo se divide entre los 4 threads
+    El segundo método más rápido es mediante un CÁLCULO SECUENCIAL, a través de "fuerza bruta" sin tener que realizar hilos.
+    El método más lento de todos es aquel en el que se crean 4 hilos secuenciales que inician hilos conforme el hilo anterior termina
+    de realizar sus cálculos.
+
+Con éstos datos se puede llegar a la conclusión de que en algunas ocasiones en mas conveniente/eficiente no crear hilos para realizar
+determinados cálculos, ya que el propio hecho de crear un hilo dentro del programa conlleva más tiempo que realizar la propia acción en sí.
+
+
+*Nota: he estado realizando más pruebas a parte de estas 5, y lo común es que en todas el más rápido sea el CÁLCULO MATRIS THREAD PARALELO,
+lo ocurrido en el caso 5 supongo que tuvo que ser algún proceso propio del SO*

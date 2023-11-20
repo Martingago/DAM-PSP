@@ -9,8 +9,9 @@ public class CalculoMatriz {
      *
      * @param matrizA
      * @param matrizB
+     * @return resultado de los calculos
      */
-    public void calcularMuplicacionMatrices(int[][] matrizA, int[][] matrizB) {
+    public long[][] calcularMuplicacionMatrices(int[][] matrizA, int[][] matrizB) {
         /**
          *
          * Para calcular matrices primero deberemos comprobar si se pueden
@@ -22,9 +23,11 @@ public class CalculoMatriz {
         int MA_columnas = matrizA[0].length;
         int MB_filas = matrizB.length;
         int MB_columnas = matrizB[0].length;
+        
+        long[][] resultadoOperacion = new long[MA_filas][MB_columnas]; //se crea una matriz del tamaño del resultado
         if (MA_columnas == MB_filas) {
             System.out.println("Matrices válidas, realizando cálculo:");
-            long[][] resultadoOperacion = new long[MA_filas][MB_columnas]; //se crea una matriz del tamaño del resultado
+            
             
             long startTime = System.currentTimeMillis();
             
@@ -40,7 +43,7 @@ public class CalculoMatriz {
             long endTime = System.currentTimeMillis();
             
             System.out.println("Resultado:");
-            printMatriz(resultadoOperacion);
+            
             long resultado = endTime - startTime;
             System.out.println("El resultado de la operación ha sido de: " + resultado + "ms");
             
@@ -48,17 +51,9 @@ public class CalculoMatriz {
             System.out.println("Las matrices no pueden ser multiplicadas");
         }
 
+        return resultadoOperacion;
     }
 
-    public void printMatriz(long[][] matriz) {
 
-        // Imprimir la matriz
-        for (int i = 0; i < matriz.length; i++) {
-            for (int j = 0; j < matriz[i].length; j++) {
-                System.out.print(matriz[i][j] + " ");
-            }
-            System.out.println();
-        }
-    }
 
 }

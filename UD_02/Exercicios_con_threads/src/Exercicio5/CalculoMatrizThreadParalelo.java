@@ -1,39 +1,45 @@
 
 package Exercicio5;
 
-public class CalculoMatrizThread implements Runnable {
+public class CalculoMatrizThreadParalelo implements Runnable {
     private int inicio;
     private int fin;
     private int[][] matrizA;
     private int[][] matrizB;
-    private long[][] resultadoHilo;
-
+    private static long[][] resultadoCalculo; //Matriz que será accesible para todos los threads
+    
+    
+  public CalculoMatrizThreadParalelo(){}; 
+  
     /**
-     * Funcion que realiza los calculos de las matrices desde un punto hasta otro
+     * Objeto que inicializa los datos para realizar los calculos de las matrices desde un punto hasta otro
      * @param inicio fila de inicio en la que se realizarán los cálculos
      * @param fin fila de fin en la que se realizarán los cálculos
      * @param matrizA datos matriz A
      * @param matrizB datos matriz B
-     * @param resultadoOperacion 
      */
-    public CalculoMatrizThread(int inicio, int fin, int[][] matrizA, int[][] matrizB, long[][] resultadoHilo) {
+    public CalculoMatrizThreadParalelo(int inicio, int fin, int[][] matrizA, int[][] matrizB) {
         this.inicio = inicio;
         this.fin = fin;
         this.matrizA = matrizA;
         this.matrizB = matrizB;
-        this.resultadoHilo = resultadoHilo;
     }
 
     @Override
     public void run() {
+        synchronized (CalculoMatrizThreadParalelo.resultadoCalculo) {
         for (int filas = inicio; filas < fin; filas++) {
             for (int columnas = 0; columnas < matrizB[0].length; columnas++) {
                 for (int sumatorio = 0; sumatorio < matrizA[0].length; sumatorio++) {
-                    resultadoHilo[filas][columnas] += matrizA[filas][sumatorio] * matrizB[sumatorio][columnas];
+                    
+                        resultadoCalculo[filas][columnas] += matrizA[filas][sumatorio] * matrizB[sumatorio][columnas];
+                    }
+                    
                 }
             }
         }
     }
+    
     /**
      * Funcion que calcula las matrices empleando 4 hilos diferentes.
      * Para que los 4 hilos tengan una carga de trabajo similar lo que hago es asignarle a cada hilo 1/4 de las filas totales, para que en su total hagan 4/4 = 100% del trabajo
@@ -44,15 +50,25 @@ public class CalculoMatrizThread implements Runnable {
      *      cuarto hilo el último cuarto correspondiente 4/4 (desde las 3/4 hasta el fin 4/4 => 1/1 => 1)
      * @param matrizA
      * @param matrizB 
+     * 
+     * NOTA: Esta es la forma que se me ha ocurrido inicialmente, la ineficiencia que tiene es que para cada thread  generado en:
+ "new CalculoMatrizThreadParalelo(int inicio, int fin, int[][]matrizA, int[][]matrizB)" se le pasa por cada hilo las matrices completas
+ Realmente una forma mas eficiente de hacerlo sería fragmentar en primera instancia las matrices en el número de hilos necesarios,
+ y modificar el código pasandole a cada hilo únicamente ese "fragmento de matriz". Habría que pasarle un índice global para que
+ el hilo supiese en que parte del resultadoCalculo debe colocar cada índice de "fragmento de matriz"
+     * 
+     * 
      */
-    public static void calcularMuplicacionMatrices(int[][] matrizA, int[][] matrizB) {
+    public  long[][] calcularMuplicacionMatrices(int[][] matrizA, int[][] matrizB) {
         int MA_filas = matrizA.length;
         int MA_columnas = matrizA[0].length;
         int MB_filas = matrizB.length;
         int MB_columnas = matrizB[0].length;
+        
+        resultadoCalculo = new long[MA_filas][MB_columnas]; //se crea una matriz del tamaño del resultado
         if (MA_columnas == MB_filas) {
             System.out.println("Matrices válidas, realizando cálculo:");
-            long[][] resultadoOperacion = new long[MA_filas][MB_columnas]; //se crea una matriz del tamaño del resultado
+            
 
             long startTime = System.currentTimeMillis();
             /**
@@ -63,10 +79,10 @@ public class CalculoMatrizThread implements Runnable {
              *      El tercer hilo desde la mitad: MA_filas /2 hasta la fila 3/4: MA_filas * 3 / 4
              *      Finalmente el último hilo desde la fila 3/4 : MA_filas * 3 / 4 hasta el final 1: MA_filas
              */
-            Thread t1 = new Thread(new CalculoMatrizThread(0, MA_filas / 4, matrizA, matrizB, resultadoOperacion));
-            Thread t2 = new Thread(new CalculoMatrizThread(MA_filas / 4, MA_filas / 2, matrizA, matrizB, resultadoOperacion));
-            Thread t3 = new Thread(new CalculoMatrizThread(MA_filas / 2, MA_filas * 3 / 4, matrizA, matrizB, resultadoOperacion));
-            Thread t4 = new Thread(new CalculoMatrizThread(MA_filas * 3 / 4, MA_filas, matrizA, matrizB, resultadoOperacion));
+            Thread t1 = new Thread(new CalculoMatrizThreadParalelo(0, MA_filas / 4, matrizA, matrizB));
+            Thread t2 = new Thread(new CalculoMatrizThreadParalelo(MA_filas / 4, MA_filas / 2, matrizA, matrizB));
+            Thread t3 = new Thread(new CalculoMatrizThreadParalelo(MA_filas / 2, MA_filas * 3 / 4, matrizA, matrizB));
+            Thread t4 = new Thread(new CalculoMatrizThreadParalelo(MA_filas * 3 / 4, MA_filas, matrizA, matrizB));
 
             t1.start();
             t2.start();
@@ -74,27 +90,20 @@ public class CalculoMatrizThread implements Runnable {
             t4.start();
 
      
-
             long endTime = System.currentTimeMillis();
 
-            System.out.println("Resultado:");
-            printMatriz(resultadoOperacion);
             long resultado = endTime - startTime;
             System.out.println("El resultado de la operación ha sido de: " + resultado + "ms");
-
         } else {
             System.out.println("Las matrices no pueden ser multiplicadas");
         }
+        return resultadoCalculo;
     }
+    
+    
+ 
 
-    public static void printMatriz(long[][] matriz) {
-        for (int i = 0; i < matriz.length; i++) {
-            for (int j = 0; j < matriz[i].length; j++) {
-                System.out.print(matriz[i][j] + " ");
-            }
-            System.out.println();
-        }
-    }
+
 }
 
 

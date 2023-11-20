@@ -1,8 +1,8 @@
 He estado realizando varias pruebas con mi ordenador y he podido obtener los siguientes tiempos de ejecucion
 para los ficheros que se encuentran en TEST.(Desde el test.txt hasta el test6.txt):
-
-EJECUCION SECUENCIAL: 68ms - 68ms - 67ms - 66ms - 70ms
-EJECUCION PARALELO: 60ms - 65ms - 61ms - 60ms - 63ms
+NUMERO DE PRUEBA:      1º   - 2º   - 3º   - 4º   - 5º
+EJECUCION SECUENCIAL:  68ms - 68ms - 67ms - 66ms - 70ms
+EJECUCION PARALELO:    60ms - 65ms - 61ms - 60ms - 63ms
 
 A esta pequeña escala se puede apreciar ligeramente que una ejecución en paralelo da una media de menores
 tiempos de ejecucion (entorno a 62ms) mientras que una ejecución secuencial un tiempo significativamente mayor (67ms)
