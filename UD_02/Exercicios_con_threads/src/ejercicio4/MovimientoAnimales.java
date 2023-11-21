@@ -24,17 +24,17 @@ public class MovimientoAnimales {
     public int movimientoTortuga() {
         int value = generateRandomValue();
 
-//        if (value <= 50) {
-//            return 3;
-//        } else if (value > 50 && value <= 70) {
-//            return -6;
-//        } else if (value > 70 && value <= 100) {
-//            return 1;
-//        } else {
-//            System.out.println("Error al obtener un valor en tortuga");
-//            return -1;
-//        }
-    return 10;
+        if (value <= 50) {
+            return 3;
+        } else if (value > 50 && value <= 70) {
+            return -6;
+        } else if (value > 70 && value <= 100) {
+            return 1;
+        } else {
+            System.out.println("Error al obtener un valor en tortuga");
+            return -1;
+        }
+        //return 10;
     }
 
     /**
@@ -45,21 +45,21 @@ public class MovimientoAnimales {
      */
     public int movimientoLiebre() {
         int value = generateRandomValue();
-//        if (value <= 20) {
-//            return 0;
-//        } else if (value > 20 && value <= 40) {
-//            return 9;
-//        } else if (value > 40 && value <= 50) {
-//            return -12;
-//        } else if (value > 50 && value <= 80) {
-//            return 1;
-//        } else if (value > 80 && value <= 100) {
-//            return -2;
-//        } else {
-//            System.out.println("Error al obtener un valor en liebre");
-//            return -1;
-//        }
-        return 10;
+        if (value <= 20) {
+            return 0;
+        } else if (value > 20 && value <= 40) {
+            return 9;
+        } else if (value > 40 && value <= 50) {
+            return -12;
+        } else if (value > 50 && value <= 80) {
+            return 1;
+        } else if (value > 80 && value <= 100) {
+            return -2;
+        } else {
+            System.out.println("Error al obtener un valor en liebre");
+            return -1;
+        }
+        //return 10;
     }
 
 }

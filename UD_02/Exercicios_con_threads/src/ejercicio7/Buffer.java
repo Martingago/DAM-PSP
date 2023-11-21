@@ -1,8 +1,4 @@
-package ejercicio7;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
+ package ejercicio7;
 
 public class Buffer {
 
@@ -21,6 +17,7 @@ public class Buffer {
     public synchronized int consumir() {
         while(this.isEmpty){
             try {
+                System.out.println((char)27 + "[31m" + "BUFFER VACI O");
                 wait();
             } catch (InterruptedException ex) {
                 System.out.println("Error de interrupción " + ex);
@@ -35,19 +32,21 @@ public class Buffer {
         return this.buffer[this.siguiente];
     }
 
-    public synchronized void consumir(int dato) {
+    public synchronized void producir(int dato) {
         while(this.isFull){
             try {
+                System.out.println((char)27 + "[31m" + "BUFFER LLENO");
                 wait();
             } catch (InterruptedException ex) {
                 System.out.println("Error de interrupción " + ex);
             }
         }
-        buffer[siguiente] = 10;
+        buffer[siguiente] = dato;
         siguiente++;
         this.isEmpty = false;
-        //Si siguiente es del tamáño del buffer, quiere decir que éste está lleno
+        //Si "siguiente" es del tamáño del buffer, quiere decir que éste está lleno
         if(siguiente == this.buffer.length){
+            
             this.isFull = true;
         }
         notifyAll();

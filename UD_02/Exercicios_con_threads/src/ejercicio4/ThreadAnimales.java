@@ -1,60 +1,77 @@
 package ejercicio4;
 
-public class ThreadAnimales implements Runnable {
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CyclicBarrier;
 
-    MovimientoAnimales mov = new MovimientoAnimales();
+public class ThreadAnimales extends Thread {
 
+    
+    private CyclicBarrier barrier;
+    private AnimalData datoAnimal;
     private EnumTipoAnimal tipoAnimal; //tipo de animal que será el hilo
-    private int posicionAnimal; //posicion en la que se encuentra el animal
-    private int resultadoMovimiento; //resultado de un movimiento
-
-    public ThreadAnimales(EnumTipoAnimal tipoAnimal, int posicion) {
+    MovimientoAnimales mov = new MovimientoAnimales();
+    
+    /**
+     * Crea un hilo que iniciará el recorrido de un animal hasta que alcance 70 puntos
+     * @param datoAnimal información del animal que realizará la carrera (mombre, icono)
+     * @param tipoAnimal ENUM con su tipo de animal ==> útil para establecer sus movimientos según su ENUM
+     * @param barrier barrera para sincronizar que los animales tengan los mimos turnos
+     */
+    public ThreadAnimales(AnimalData datoAnimal, EnumTipoAnimal tipoAnimal, CyclicBarrier barrier) {
+        this.datoAnimal = datoAnimal;
         this.tipoAnimal = tipoAnimal;
-        this.posicionAnimal = posicion;
+        this.barrier = barrier;
 
     }
 
-    @Override
     public void run() {
-
+        int posicionAnimal = datoAnimal.getPosicionAnimal();
         while (posicionAnimal < 70) {
-
+            posicionAnimal = datoAnimal.getPosicionAnimal();
             try {
-                resultadoMovimiento = tipoAnimal.movimiento();
-                posicionAnimal += resultadoMovimiento;
-
+                int movimiento = tipoAnimal.movimiento();
+                posicionAnimal += movimiento;
+                //Se impide que el animal retroceda de la salida
                 if (posicionAnimal < 1) {
                     posicionAnimal = 1;
                 }
-
-                if (resultadoMovimiento > 0) {
-                    System.out.println(tipoAnimal.name() + " ha  avanzado: " + resultadoMovimiento + " casillas");
-                } else {
-                    System.out.println(tipoAnimal.name() + " ha  retrocedido: " + resultadoMovimiento * -1 + " casillas");
+                //Se establecen los mensajes de movimiento:
+                String msg = "";
+                if(movimiento <0){
+                msg = datoAnimal.getNombreAnimal() + " ha retrocedido " +movimiento * -1 + " casillas";
+                }else{
+                msg = datoAnimal.getNombreAnimal() + " ha avanzado " +movimiento + " casillas";
                 }
+                //Se actualiza la posicion del animal
+                datoAnimal.setPosicionAnimal(posicionAnimal); 
 
-                String animal = (tipoAnimal.name() == "TORTUGA") ? "T" : "C";
+                //Se establecen los mensajes de cada animal: icono, posicion, y resultado de movimiento
+                char icono = datoAnimal.getIconoNombre();
                 String avance = "";
                 for (int i = 1; i <= 70; i++) {
                     if (i < posicionAnimal) {
                         avance += "#";
                     } else if (i == posicionAnimal) {
-                        avance += animal;
+                        avance += icono;
                     } else if (i > posicionAnimal && i != 70) {
                         avance += "_";
                     } else if (i == 70) {
-                        avance += "/meta";
+                        avance += "|";
                     }
                 }
-                System.out.printf("%-10s %s%n", tipoAnimal, avance);
+                System.out.printf("%-10s %s %s %n", datoAnimal.getNombreAnimal(), avance, msg);
 
-                Thread.sleep(10);
+                Thread.sleep(1000);
+                barrier.await();
             } catch (InterruptedException ex) {
                 System.out.println("Error de interrupción del proceso" + ex);
+            } catch (BrokenBarrierException ex) {
+                System.out.println("Error de interrupción en el código");
             }
 
         }
-
-        System.out.println("Ha alcanzado la meta!");
+        if(Carrera.comprobarGanadorCarrera()){
+            System.exit(0);
+        };
     }
 }
