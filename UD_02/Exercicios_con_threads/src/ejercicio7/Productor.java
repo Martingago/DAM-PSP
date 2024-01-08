@@ -1,5 +1,7 @@
 package ejercicio7;
 
+import java.util.Random;
+
 public class Productor extends Thread {
 
     private Buffer buffer;
