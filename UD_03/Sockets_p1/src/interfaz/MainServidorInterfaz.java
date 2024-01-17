@@ -69,6 +69,8 @@ public class MainServidorInterfaz extends javax.swing.JFrame {
         jPanel1.add(text_msg, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 350, -1));
 
         output_txt.setColumns(20);
+        output_txt.setEditable(false);
+        output_txt.setFocusable(false);
         output_txt.setRows(5);
         jScrollPane1.setViewportView(output_txt);
 
@@ -110,6 +112,8 @@ public class MainServidorInterfaz extends javax.swing.JFrame {
         // TODO add your handling code here:
         //Se bloquea el botón para que no se le pueda volver a dar:
         btn_start.setEnabled(false);
+        //Se bloquea el spinner del puerto (aunque lo cambie no afecta, pero queda mejor así)
+        puerto_local.setEnabled(false);
         //Se activa el botón para cancelar:
         btn_close.setEnabled(true);
         int puerto = (Integer) puerto_local.getValue();
@@ -127,6 +131,7 @@ public class MainServidorInterfaz extends javax.swing.JFrame {
                     //Para actualizar interfaz visual debe de hacerse desde el hilo de despacho de eventos
                     SwingUtilities.invokeLater(new Runnable() {
                         public void run() {
+                            puerto_local.setEnabled(true);
                             output_txt.setText(output);
                             btn_start.setEnabled(true);
                             btn_close.setEnabled(false);
@@ -168,6 +173,7 @@ public class MainServidorInterfaz extends javax.swing.JFrame {
         }
         btn_close.setEnabled(false);
         btn_start.setEnabled(true);
+        puerto_local.setEnabled(true);
 
     }//GEN-LAST:event_btn_closeActionPerformed
 

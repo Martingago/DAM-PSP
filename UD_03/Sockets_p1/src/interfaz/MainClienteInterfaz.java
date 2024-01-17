@@ -25,7 +25,7 @@ public class MainClienteInterfaz extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         mensaje_to_send = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
+        btn_send = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -55,13 +55,13 @@ public class MainClienteInterfaz extends javax.swing.JFrame {
 
         main_container.add(panel_mensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 350, 110));
 
-        jButton1.setText("Enviar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btn_send.setText("Enviar");
+        btn_send.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btn_sendActionPerformed(evt);
             }
         });
-        main_container.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 400, -1, -1));
+        main_container.add(btn_send, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 380, -1, -1));
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -98,7 +98,7 @@ public class MainClienteInterfaz extends javax.swing.JFrame {
         output_txt.setRows(5);
         jScrollPane2.setViewportView(output_txt);
 
-        panel_result.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 350, -1));
+        panel_result.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 350, -1));
 
         main_container.add(panel_result, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, 350, 110));
 
@@ -110,22 +110,32 @@ public class MainClienteInterfaz extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(main_container, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE)
+            .addComponent(main_container, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+    
+    /**
+     * Envia datos al servidor a través de un socket UDP
+     * @param evt action del usuario
+     */
+    
+    private void btn_sendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sendActionPerformed
+        // Se obtienen los datos desde los campos de información de la interfaz
         String mensaje = mensaje_to_send.getText();
         String direccion = direccion_ip.getText();
         Integer p_destino = (Integer) puerto_destino.getValue();
         Integer p_local = (Integer) puerto_local.getValue();
+        
+        // con la información obtenida se llama a la función enviarMensajeServidor
         String result = ClienteUDP.enviarMensajeServidor(p_local, p_destino, direccion, mensaje);
+        
+        //Se establece un mensaje de salida
         output_txt.setText(result);
         output_txt.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btn_sendActionPerformed
 
     private void direccion_ipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_direccion_ipActionPerformed
         // TODO add your handling code here:
@@ -169,8 +179,8 @@ public class MainClienteInterfaz extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_send;
     private javax.swing.JTextField direccion_ip;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
