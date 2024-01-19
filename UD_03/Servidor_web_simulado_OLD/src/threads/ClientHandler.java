@@ -16,7 +16,7 @@ public class ClientHandler implements Runnable {
         try {
             //Hilo de cada cliente que recibe el servidor.
             //Se debe crear un processBuilder para emular el acceso al contenido del servidor
-            ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "echo ¡Ola! Este é un servidor web simulado en Java.");
+            ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "echo Ola! Este é un servidor web simulado en Java.");
             Process process = pb.start();
 
             // Leer la salida del proceso
