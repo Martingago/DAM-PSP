@@ -18,14 +18,13 @@ public class Cliente_TCP {
             Socket socket = new Socket(HOST_DESTINO, PUERTO_DESTINO);
             //Flujo de datos de salida que va a ciruclar por el socket creado anteriormente
             flujo_salida = new ObjectOutputStream(socket.getOutputStream());
-
             //Se crea un paqueteTCP con la informacion a enviar:
             PaqueteTCP paqueteTCP = new PaqueteTCP(PUERTO_ORIGEN, PUERTO_DESTINO, mensaje);
             //Escribe el objeto 
             flujo_salida.writeObject(paqueteTCP);
 
         } catch (IOException ex) {
-            System.out.println("Error de excepcion en la E/S desde el cliente \n" + ex);
+            System.out.println("Error desde el cliente \n" + ex);
         }finally{
             try {
                 flujo_salida.close();

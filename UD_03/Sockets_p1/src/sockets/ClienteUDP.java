@@ -11,7 +11,7 @@ public class ClienteUDP {
      * @param PUERTO_DESTINO
      * @param DIRECCION
      * @param msj
-     * @return mensaje con el resumen de datos enviados
+     * @return String mensaje con el resumen de datos enviados
      */
     public static String enviarMensajeServidor(int PUERTO_LOCAL, int PUERTO_DESTINO, String DIRECCION, String msj) {
         try {

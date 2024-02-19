@@ -11,7 +11,7 @@ public class SimpleTextWebClient {
         final String HOST = "localhost";
         final int PUERTO = 8080;
         try {
-            //Nos conectamos al socket
+            //Creamos un socket
             Socket socketCliente = new Socket(HOST, PUERTO);
             
             //Se realiza la logica del cliente llamando al método:

@@ -6,7 +6,12 @@ import java.net.*;
 public class ServidorUDP {
 
     private static int PUERTO_LOCAL;
-    //Se inicializa el servidor
+    
+    /**
+     * Funcion que inicia el servidor
+     * @param puerto puerto que se quiere abrir
+     * @return DatagramSocket con la información del servidor
+     */
     public DatagramSocket initServidorUDP(int puerto) {
         DatagramSocket socket = null;
         try {
