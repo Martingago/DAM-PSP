@@ -15,21 +15,16 @@ public class ServidorMain {
 
         DataOutputStream outSocket; //salida de datos
 
-        /**
-         * Dado que en la actividad se indica que el servidor recibe conexion de
-         * varios clientes, he seguido el ejemplo propuesto en los apuntes y he
-         * añadido un ArrayList para manejar de forma adecuada los distintos
-         * threads de posibles conexiones entrandes
-         *
-         */
         Scanner sc = new Scanner(System.in);
-        //System.out.println("Introduce el número del puerto en el que quieres iniciar el servidor:");
-        //int PUERTO = sc.nextInt();
-        int PUERTO = 6000;
-        //Se lanza el servidor
+        System.out.println("Introduce el número del puerto en el que quieres iniciar el servidor:");
+        int PUERTO = sc.nextInt();
+        sc.nextLine();  // Consume el '\n' que queda después de nextInt()
+        
         try {
+            //Se lanza el servidor
             serverSocket = new ServerSocket(PUERTO);
             System.out.println("Servidor iniciado en el puerto: " + PUERTO);
+            
             //Se acepta la conexion del cliente
             socket = serverSocket.accept();
             System.out.println("Cliente conectado: " + socket.getInetAddress());
@@ -37,27 +32,26 @@ public class ServidorMain {
 
             //Envia un mensaje al cliente indicando que se ha conectado
             outSocket.writeUTF("Conexión realizada con éxito");
-            outSocket.writeUTF("----------------------------\n");
+            outSocket.writeUTF("----------------------------");
 
-            //Se crea un hilo de gestion para el cliente para ver sus datos
+            //Se crea un hilo de gestion en el servidor para leer los datos recibidos a la par que sigue ejecutando el programa
             ServidorThread hiloServidor = new ServidorThread(socket);
             hiloServidor.start();
-            sc = new Scanner(System.in); //se abre el scanner:
+            
+            //Se leen los datos de saida del lado servidor
             String mensaje = null;
             do {
-                //mensaje que envia el servidor al cliente:
-                mensaje = sc.nextLine();
-                outSocket.writeUTF("<<<<: " + mensaje);
+                mensaje = sc.nextLine(); //mensaje que envia el servidor al cliente
+                outSocket.writeUTF(mensaje);
             } while (!mensaje.equals("sair()"));
-
+            
             //Se cierra la conexion
             try {
-                //Se llama a la funcion para que detenga el hilo que lee datos del socket
-                hiloServidor.stopThread();
-                socket.close(); //Se cierra el socket
-                System.out.println("Conexion cerrada");
+                if(!socket.isClosed()){
+                    socket.close(); //Se cierra el socket
+                }
             } catch (IOException e) {
-                System.out.println("Error al cerrar el socket");
+                System.out.println("Error al cerrar el socket" + e);
             }
 
         } catch (IOException ex) {
