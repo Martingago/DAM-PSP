@@ -80,7 +80,7 @@ public class GestorCifradoRSA {
      * @throws IllegalBlockSizeException
      * @throws BadPaddingException 
      */
-    public byte[] descifrar(byte[] paraDescifrar, Key claveDescifrado)
+    public static byte[] descifrar(byte[] paraDescifrar, Key claveDescifrado)
             throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
         cifrador.init(Cipher.DECRYPT_MODE, claveDescifrado);
         return cifrador.doFinal(paraDescifrar);
