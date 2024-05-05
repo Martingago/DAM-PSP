@@ -15,7 +15,7 @@ public class JavaGmail {
         
         String mailFrom = "magachenvio@gmail.com"; //email que envia el mensaje
         String password = "bhth wvir bczs bmax"; //password del email que envia el mensaje
-        String mailTo = "magachrecibido@yopmail.com"; //email que recibe el mensaje
+        String mailTo = "chgnitram@gmail.com"; //email que recibe el mensaje
 
         // Configuración del servidor SMTP de Google
         props.put("mail.smtp.host", "smtp.gmail.com");
