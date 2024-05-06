@@ -1,10 +1,11 @@
-package Main;
+package ud5_practica1;
 
 import javax.mail.*;
 import javax.mail.internet.*;
+
 import java.util.Properties;
 
-public class JavaTest {
+public class UD5_Practica1 {
 
     public static void main(String[] args) {
         //En esta actividad el correo no tiene un auth true, lo que hace que no sea necesario escribir la contraseña ni crear una session con
@@ -13,14 +14,14 @@ public class JavaTest {
         String mailTo = "magachrecibido@yopmail.com";
 
         Properties props = new Properties();
-
+        
         props.put("mail.smtp.host", "localhost");
         props.put("mail.smtp.port", "25");
         props.put("mail.smtp.auth", "false");
         props.put("mail.smtp.starttls.enable", "true");
 
         // Se Crea una sesión SMTP con las propiedades especificadas
-        Session session = Session.getDefaultInstance(props);
+       Session session = Session.getDefaultInstance(props);
         session.setDebug(true);
 
         try {
